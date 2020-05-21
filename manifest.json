@@ -1,0 +1,33 @@
+{
+	"manifest_version": 2,
+	"name": "Highlighter + Notes",
+	"version": "1.0.0",
+
+	"description": "Highlighter and Notes for Webpages",
+	"icons": {
+		"16": "icon_16.png",
+		"32": "icon_32.png",
+		"64": "icon_64.png",
+		"128": "icon_128.png"
+	},
+
+	"browser_action": {
+		"default_icon": "icon_128.png",
+		"default_popup": "popup.html",
+		"default_title": "Highlighter + Notes"
+	},
+
+	"author": "Prateek Chawla",
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["highlighter-util.js","highlighter.js", "dispatch-highlighter.js"]
+		}
+	],
+	"permissions": ["storage", "tabs"]
+}
