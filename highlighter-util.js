@@ -5,8 +5,10 @@ function extractFromSel(sel) {
 	let node = range.commonAncestorContainer;
 	let focusOffset = sel.focusOffset;
 	let anchorOffset = sel.anchorOffset;
-	return { anchor, focus, node, focusOffset, anchorOffset };
+	color = "yellow";
+	return { anchor, focus, node, focusOffset, anchorOffset, color };
 }
+
 function addDocFrag(node, preFlag, preOffset, postFlag, postOffset) {
 	if (node.parentNode.className === "highlighter-ext") return;
 	const frag = document.createDocumentFragment();
@@ -65,36 +67,49 @@ function takeAction(action, node, preFlag, preOffset, postFlag, postOffset) {
 		removeDocFrag(node, preFlag, preOffset, postFlag, postOffset);
 }
 
-function addToStorage(sel, color, url) {
-	// let url=url
-	// console.log(url)
+function addToStorage(selObj, color, url, action) {
+	anchorPath = getPath(selObj.anchor);
+	focusPath = getPath(selObj.focus);
+	nodePath = getPath(selObj.node);
 	chrome.storage.sync.get("highlightsExt", function (results) {
-		console.log("results --> ", results);
-		console.log("highlightsExt --> ", results.highlightsExt);
-		// console.log("o----> ",url);
 		highlightsExt = results.highlightsExt;
 		if (!highlightsExt[url]) highlightsExt[url] = [];
-		//save obj + color
-			let obj = new Object();
-			//pickup here
-			obj.anchorNode =sel.anchorNode.cloneNode(true)
-			obj.anchorOffset = sel.anchorOffset;
-			obj.focusNode = sel.focusNode.cloneNode(true);
-			obj.focusOffset = sel.focusOffset;
-			obj.isCollapsed = sel.isCollapsed;
-			obj.color=color
-
+		let obj = new Object();
+		obj.anchorNode = anchorPath;
+		obj.anchorOffset = selObj.anchorOffset;
+		obj.focusNode = focusPath;
+		obj.node = nodePath;
+		obj.focusOffset = selObj.focusOffset;
+		obj.isCollapsed = selObj.isCollapsed;
+		obj.color = color;
+		obj.anchorString = selObj.anchor.textContent;
+		obj.focusString = selObj.focus.textContent;
+		obj.action = action;
 		highlightsExt[url].push(obj);
-		console.log(obj);
-		chrome.storage.sync.set({ highlightsExt: highlightsExt });
-		console.log("Added To storage");
+		chrome.storage.sync.set({ highlightsExt: highlightsExt }, () => {
+			console.log("Added To Storage");
+		});
 	});
-	retrieveFromStorage();
 }
 
-function retrieveFromStorage() {
-	chrome.storage.sync.get("highlightsExt", function (results) {
-		console.log(results);
-		console.log(results.highlightsExt);
-	});
+function getPath(node) {
+	let path = [];
+	let parent;
+	if (node === document.documentElement) return path;
+	while (node !== document.body) {
+		parent = node.parentNode;
+		let idx = Array.prototype.indexOf.call(parent.childNodes, node);
+		path.push(idx);
+		node = parent;
+	}
+	return path;
+}
+
+function getNodeFromPath(path) {
+	node = document.body;
+	for (let idx = path.length - 1; idx >= 0; idx--) {
+		if (!node) return null;
+		node = node.childNodes[path[idx]];
+	}
+	return node;
 }

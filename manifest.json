@@ -26,8 +26,13 @@
 	"content_scripts": [
 		{
 			"matches": ["<all_urls>"],
-			"js": ["highlighter-util.js","highlighter.js", "dispatch-highlighter.js"]
+			"js": [
+				"highlighter-util.js",
+				"highlighter.js",
+				"dispatch-highlighter.js",
+				"render-highlights.js"
+			]
 		}
 	],
-	"permissions": ["storage", "tabs"]
+	"permissions": ["storage", "tabs", "http://*/", "https://*/"]
 }

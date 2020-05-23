@@ -27,43 +27,21 @@ chrome.runtime.onMessage.addListener(function (req) {
 		}
 	}
 });
-/*
-function (clickedBtnSwitch, otherBtnSwitch, actionToPerform, actionToDisable) {
-    clickedBtnSwitch = !clickedBtnSwitch
-    if (clickedBtnSwitch) {
-        if (otherBtnSwitch) {
-            document.removeEventListener("mousep", actionToDisable)
-            otherBtnSwitch=!otherBtnSwitch
-        }
-        document.addEventListener("mousep",actionToPerform)
-    } else {
-        document.removeEventListener("mouseup",actionToPerform)
-    }
-}
-*/
-function addHighlight() {
-	// const url = chrome.tabs.getCurrent(function (tab) {
-	// 	return tab.url;
-	// });
-	console.log("Mouseup");
-	const sel = window.getSelection();
-	highlighter(ADD_HIGHLIGHT, sel);
-	addToStorage(sel, "yellow", window.location.href);
-}
 
-function removeHighlight() {
-	const url = chrome.tabs.getCurrent(function (tab) {
-		return tab.url;
-	});
+function addHighlight() {
 	const sel = window.getSelection();
-	highlighter(REMOVE_HIGHLIGHT, sel);
-	addToStorage(sel, "yellow", window.location.href);
+	if (sel.isCollapsed) return;
+	selObj = extractFromSel(sel);
+	addToStorage(selObj, "yellow", window.location.href, ADD_HIGHLIGHT);
+	highlighter(ADD_HIGHLIGHT, selObj);
 	sel.removeAllRanges();
 }
 
-function highlightHandler(action, url) {
+function removeHighlight() {
 	const sel = window.getSelection();
-	highlighter(REMOVE_HIGHLIGHT, sel);
-	addToStorage(sel, "yellow", url);
+	if (sel.isCollapsed) return;
+	selObj = extractFromSel(sel);
+	addToStorage(selObj, "yellow", window.location.href, REMOVE_HIGHLIGHT);
+	highlighter(REMOVE_HIGHLIGHT, selObj);
 	sel.removeAllRanges();
 }
