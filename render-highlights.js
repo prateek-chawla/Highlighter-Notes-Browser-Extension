@@ -1,4 +1,4 @@
-function renderHighlights() {
+(function renderHighlights() {
 	url = window.location.href;
 	chrome.storage.sync.get("highlightsExt", function (results) {
 		highlightsExt = results.highlightsExt;
@@ -7,7 +7,7 @@ function renderHighlights() {
 			renderHighlight(storedObj);
 		}
 	});
-}
+})();
 
 function renderHighlight(storedObj) {
 	try {
@@ -26,11 +26,8 @@ function renderHighlight(storedObj) {
 		anchor.textContent !== storedObj.anchorString ||
 		focus.textContent !== storedObj.focusString
 	) {
-		console.log("DOM Changed");
 		return;
 	}
 	selObj = { anchor, focus, node, focusOffset, anchorOffset, color };
 	highlighter(action, selObj);
 }
-
-renderHighlights();
