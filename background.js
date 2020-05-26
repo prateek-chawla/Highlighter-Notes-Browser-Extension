@@ -1,16 +1,5 @@
-const SAVE_NOTE = "SAVE_NOTE";
-const RENDER_HIGHLIGHTS = "RENDER_HIGHLIGHTS";
 chrome.runtime.onInstalled.addListener(initialiseStorage);
-highlightExtData = {
-	btnStates: {
-		add: false,
-		remove: false,
-		clear: false,
-		notes: false,
-	},
-	lastUsed: true,
-	lastColor: "#fff475",
-};
+chrome.tabs.onUpdated.addListener(renderHighlights);
 
 function initialiseStorage() {
 	chrome.storage.sync.get("highlightsExtInit", function (results) {
@@ -23,11 +12,8 @@ function initialiseStorage() {
 	});
 }
 
-chrome.tabs.onUpdated.addListener(renderHighlights);
-
-
 function renderHighlights() {
-	chrome.tabs.executeScript({ file: "render-highlights.js" }, function () {
+	chrome.tabs.executeScript({ file: "content-scripts/render-highlights.js" }, function () {
 		if (chrome.runtime.lastError) console.log(chrome.runtime.lastError.message);
 	});
 }

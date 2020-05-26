@@ -110,6 +110,7 @@ removeHighlightBtn.addEventListener("click", function (event) {
 });
 
 clearBtn.addEventListener("click", function () {
+	changeBtnClr(clearBtn, "red");
 	chrome.storage.sync.get("highlightsExt", function (results) {
 		console.log("clearing");
 		let highlightsExt = results.highlightsExt;
@@ -157,5 +158,13 @@ colorPalette.forEach(function (clr) {
 });
 
 notesBtn.addEventListener("click", function () {
-	chrome.browserAction.setPopup({ popup: "notes-popup.html" });
-})
+	chrome.browserAction.setPopup({ popup: "./notes-popup.html" });
+});
+
+
+function changeBtnClr(button, clr) {
+	button.style.color = clr
+	setTimeout(function () {
+		button.style.color = "ivory"
+	}, 1200);
+}

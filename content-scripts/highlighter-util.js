@@ -9,8 +9,11 @@ function extractFromSel(sel) {
 	return { anchor, focus, node, focusOffset, anchorOffset, color };
 }
 
-function addDocFrag(node, preFlag, preOffset, postFlag, postOffset,color) {
-	if (node.parentNode.className === "highlighter-ext" && node.parentNode.style.backgroundColor===color) return;
+function addDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
+	if (node.parentNode.className === "highlighter-ext") {
+		modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color);
+		return;
+	}
 	const frag = document.createDocumentFragment();
 	const span = document.createElement("span");
 	const text = node.nodeValue;
@@ -22,7 +25,7 @@ function addDocFrag(node, preFlag, preOffset, postFlag, postOffset,color) {
 	}
 
 	const spanText = text.substring(preOffset, postOffset);
-	span.appendChild(document.createTextNode(spanText));
+	span.textContent = spanText;
 	frag.appendChild(span);
 	if (postFlag && postOffset < text.length) {
 		const postSpan = document.createTextNode(text.substring(postOffset));
@@ -35,7 +38,7 @@ function removeDocFrag(node, preFlag, preOffset, postFlag, postOffset) {
 	if (node.parentNode.className === "highlighter-ext") {
 		const frag = document.createDocumentFragment();
 		const text = node.nodeValue;
-		const prevColor = node.parentNode.style.backgroundColor
+		const prevColor = node.parentNode.style.backgroundColor;
 		if (preFlag && preOffset > 0) {
 			const preSpan = document.createElement("span");
 			preSpan.style.backgroundColor = prevColor;
@@ -61,9 +64,53 @@ function removeDocFrag(node, preFlag, preOffset, postFlag, postOffset) {
 	}
 }
 
-function takeAction(action, node, preFlag, preOffset, postFlag, postOffset,color) {
+function modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
+	console.log("node---> ", node);
+	console.log("parentNode --->", node.parentNode);
+	console.log("nodeValue --->", node.nodeValue);
+	const prevColor = node.parentNode.style.backgroundColor;
+	const frag = document.createDocumentFragment();
+	const text = node.nodeValue;
+	if (preFlag && preOffset > 0) {
+		const preSpan = document.createElement("span");
+		preSpan.style.backgroundColor = prevColor;
+		preSpan.className = "highlighter-ext";
+		preSpan.textContent = text.substring(0, preOffset);
+		console.log(preSpan);
+		frag.appendChild(preSpan);
+	}
+
+	const span = document.createElement("span");
+	span.style.backgroundColor = color;
+	span.className = "highlighter-ext";
+	span.textContent = text.substring(preOffset, postOffset);
+	frag.appendChild(span);
+	console.log(span);
+
+	if (postFlag && postOffset < text.length) {
+		const postSpan = document.createElement("span");
+		postSpan.style.backgroundColor = prevColor;
+		postSpan.className = "highlighter-ext";
+		postSpan.textContent = text.substring(postOffset);
+		frag.appendChild(postSpan);
+		console.log(postSpan);
+	}
+	console.log("frag log  --->", frag);
+	console.dir("frag dir -->", frag);
+	node.parentNode.replaceWith(frag);
+}
+
+function takeAction(
+	action,
+	node,
+	preFlag,
+	preOffset,
+	postFlag,
+	postOffset,
+	color
+) {
 	if (action === ADD_HIGHLIGHT)
-		addDocFrag(node, preFlag, preOffset, postFlag, postOffset,color);
+		addDocFrag(node, preFlag, preOffset, postFlag, postOffset, color);
 	else if (action === REMOVE_HIGHLIGHT)
 		removeDocFrag(node, preFlag, preOffset, postFlag, postOffset);
 }

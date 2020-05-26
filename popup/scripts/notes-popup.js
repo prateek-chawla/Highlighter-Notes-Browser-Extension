@@ -1,5 +1,5 @@
 "use strict";
-const FONT_SIZES = ["13px", "14px", "16px","18px"];
+const FONT_SIZES = ["13px", "14px", "16px", "18px"];
 
 const tabParams = { active: true, currentWindow: true };
 
@@ -31,7 +31,7 @@ function renderNotes() {
 }
 
 function saveNote() {
-	saveBtn.style.color = "green";
+	changeBtnClr(saveBtn, "green", 1500);
 	chrome.storage.sync.get("notesExt", function (results) {
 		let notes = results.notesExt;
 		notes[url] = note.value;
@@ -44,7 +44,7 @@ function saveNote() {
 }
 
 function delNote() {
-	delBtn.style.color = "#D81E5B";
+	changeBtnClr(delBtn, "red", 1500);
 	chrome.storage.sync.get("notesExt", function (results) {
 		let notes = results.notesExt;
 		notes[url] = note.value;
@@ -59,13 +59,20 @@ function delNote() {
 }
 
 function changeFontSize() {
+	changeBtnClr(fontSizeBtn, "dodgerblue", 700);
 	let currFontSize = note.style.fontSize;
 	let idx = FONT_SIZES.indexOf(currFontSize);
-    let newFontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
-    note.style.fontSize=newFontSize
+	let newFontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
+	note.style.fontSize = newFontSize;
 }
 
 highlighterBtn.addEventListener("click", function () {
-	chrome.browserAction.setPopup({ popup: "highlighter-popup.html" });
+	chrome.browserAction.setPopup({ popup: "./highlighter-popup.html" });
 });
 
+function changeBtnClr(button, clr, duration) {
+	button.style.color = clr;
+	setTimeout(function () {
+		button.style.color = "ivory";
+	}, duration);
+}
