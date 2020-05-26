@@ -197,3 +197,11 @@ input[type="radio"]:checked + .palette-color .check-icon {
 	background: ivory;
 
 }
+
+.cursor-h{
+	cursor: url(cursors/cursor-h.cur),text;
+}
+
+.cursor-r{
+	cursor:url(cursors/cursor-r.cur),text;
+}

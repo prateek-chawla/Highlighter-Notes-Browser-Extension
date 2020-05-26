@@ -11,6 +11,7 @@ const SAVE_NOTE = "SAVE_NOTE";
 const saveBtn = document.getElementById("save-btn");
 const delBtn = document.getElementById("delete-btn");
 const fontSizeBtn = document.getElementById("font-size-btn");
+const highlighterBtn = document.getElementById("highlighter-btn");
 const note = document.getElementById("note");
 
 window.addEventListener("load", renderNotes);
@@ -63,3 +64,8 @@ function changeFontSize() {
     let newFontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
     note.style.fontSize=newFontSize
 }
+
+highlighterBtn.addEventListener("click", function () {
+	chrome.browserAction.setPopup({ popup: "highlighter-popup.html" });
+});
+

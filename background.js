@@ -18,7 +18,7 @@ function initialiseStorage() {
 			chrome.storage.sync.set({ highlightsExt: {} });
 			chrome.storage.sync.set({ notesExt: {} });
 			chrome.storage.sync.set({ highlighterExtInit: true });
-			chrome.storage.sync.set({ highlighterExtData: highlightExtData });
+			chrome.storage.sync.set({ highlighterExtColor: "#fff475" });
 		}
 	});
 }

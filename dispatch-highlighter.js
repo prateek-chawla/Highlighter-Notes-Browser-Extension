@@ -1,8 +1,10 @@
+const GET_BUTTON_STATUS = "GET_BUTTON_STATUS";
+
 let addHighlightSwitch = false;
 let removeHighlightSwitch = false;
 let action, color;
 
-chrome.runtime.onMessage.addListener(function (req) {
+chrome.runtime.onMessage.addListener(function (req, res, sendResponse) {
 	if (req.action === ADD_HIGHLIGHT) {
 		action = req.action;
 		color = req.color;
@@ -16,6 +18,7 @@ chrome.runtime.onMessage.addListener(function (req) {
 		} else {
 			document.removeEventListener("mouseup", highlightHandler);
 		}
+		sendResponse({ switch: addHighlightSwitch });
 	} else if (req.action === REMOVE_HIGHLIGHT) {
 		action = req.action;
 		color = req.color;
@@ -29,6 +32,9 @@ chrome.runtime.onMessage.addListener(function (req) {
 		} else {
 			document.removeEventListener("mouseup", highlightHandler);
 		}
+		sendResponse({ switch: removeHighlightSwitch });
+	} else if (req.action === GET_BUTTON_STATUS) {
+		sendResponse({ addBtn: addHighlightSwitch, remBtn: removeHighlightSwitch });
 	}
 });
 
