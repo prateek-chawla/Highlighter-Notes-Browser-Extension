@@ -8,6 +8,7 @@ function initialiseStorage() {
 			chrome.storage.sync.set({ notesExt: {} });
 			chrome.storage.sync.set({ highlighterExtInit: true }); //Storage Initialised
 			chrome.storage.sync.set({ highlighterExtColor: "#fff475" }); // Default Color
+			chrome.storage.sync.set({ highlighterExtFontSize: "14px" }); // Default Font Size
 		}
 	});
 }

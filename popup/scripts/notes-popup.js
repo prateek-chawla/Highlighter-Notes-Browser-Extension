@@ -7,6 +7,8 @@ const fontSizeBtn = document.getElementById("font-size-btn");
 const highlighterBtn = document.getElementById("highlighter-btn");
 const note = document.getElementById("note");
 
+let fontSize = "14px";
+
 const tabParams = { active: true, currentWindow: true };
 let url;
 chrome.tabs.query(tabParams, function (tabs) {
@@ -17,6 +19,13 @@ window.addEventListener("load", renderNotes);
 saveBtn.addEventListener("click", saveNote);
 delBtn.addEventListener("click", delNote);
 fontSizeBtn.addEventListener("click", changeFontSize);
+
+(function setUpFontSize() {
+	chrome.storage.sync.get("highlighterExtFontSize", function (results) {
+		fontSize = results.highlighterExtFontSize;
+		note.style.fontSize = fontSize;
+	});
+})();
 
 highlighterBtn.addEventListener("click", function () {
 	chrome.browserAction.setPopup({ popup: "/popup/highlighter-popup.html" });
@@ -53,8 +62,11 @@ function changeFontSize() {
 	changeBtnClr(fontSizeBtn, "dodgerblue", 700);
 	let currFontSize = note.style.fontSize;
 	let idx = FONT_SIZES.indexOf(currFontSize);
-	let newFontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
-	note.style.fontSize = newFontSize;
+	fontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
+	note.style.fontSize = fontSize;
+	chrome.storage.sync.set({
+		highlighterExtFontSize: fontSize,
+	});
 }
 
 function changeBtnClr(button, clr, duration) {
