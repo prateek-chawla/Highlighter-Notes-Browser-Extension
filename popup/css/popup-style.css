@@ -110,7 +110,8 @@ input[type="radio"] {
 
 .palette-color:hover {
 	transform: translate(-2%, -2%);
-	box-shadow: -1px -1px 3px 3px black, 1px 1px 2px 1px whitesmoke, inset 0px 0px 2px #000000;
+	box-shadow: -1px -1px 3px 3px black, 1px 1px 2px 1px whitesmoke,
+		inset 0px 0px 2px #000000;
 }
 
 input[type="radio"]:checked + .palette-color {
@@ -129,7 +130,7 @@ input[type="radio"]:checked + .palette-color .check-icon {
 	width: 100%;
 	text-align: center;
 	font-size: 16px;
-	color: rgba(0,0,0,0.3);
+	color: rgba(0, 0, 0, 0.3);
 	padding-top: 5px;
 	transition: 0.5s ease;
 }
@@ -150,15 +151,13 @@ input[type="radio"]:checked + .palette-color .check-icon {
 	background-color: var(--green);
 }
 
-
 /* Notes */
 
-#notes-body{
+#notes-body {
 	height: 400px;
 }
 
-
-.notes{
+.notes {
 	/* border: 1px solid white; */
 
 	padding: 15px 30px 15px 10px;
@@ -166,7 +165,7 @@ input[type="radio"]:checked + .palette-color .check-icon {
 	height: 300px;
 	box-sizing: border-box;
 }
-#note{
+#note {
 	background-color: inherit;
 	border: none;
 	padding: 10px;
@@ -174,7 +173,7 @@ input[type="radio"]:checked + .palette-color .check-icon {
 	width: 100%;
 	height: 100%;
 	font-size: 14px;
-	font-family: 'Open Sans';
+	font-family: "Open Sans";
 	color: ivory;
 	overflow-y: scroll;
 	resize: none;
@@ -190,18 +189,16 @@ input[type="radio"]:checked + .palette-color .check-icon {
 
 ::-webkit-scrollbar-thumb {
 	background: lightgrey;
-
 }
 
 ::-webkit-scrollbar-thumb:hover {
 	background: ivory;
-
 }
 
-.cursor-h{
-	cursor: url(cursors/cursor-h.cur),text;
+.cursor-h {
+	cursor: url(cursors/cursor-h.cur), text;
 }
 
-.cursor-r{
-	cursor:url(cursors/cursor-r.cur),text;
+.cursor-r {
+	cursor: url(cursors/cursor-r.cur), text;
 }

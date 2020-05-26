@@ -1,11 +1,12 @@
 "use strict";
 //Highlights
-console.log("Script Loaded");
+
 const ADD_HIGHLIGHT = "ADD";
 const REMOVE_HIGHLIGHT = "REMOVE";
 const RENDER_HIGHLIGHTS = "RENDER_HIGHLIGHTS";
 const GET_BUTTON_STATUS = "GET_BUTTON_STATUS";
-//colors
+
+// COLORS
 const colors = {
 	GREEN: "#ccff90",
 	RED: "#f28b82",
@@ -55,10 +56,8 @@ chrome.tabs.query(tabParams, function (tabs) {
 		clrHex = results.highlighterExtColor;
 		colorPalette.forEach(function (clr) {
 			const clrStr = clr.className.split(" ")[0].toUpperCase();
-			console.log("_______", clrHex, clrStr);
 			if (clrHex === colors[clrStr]) {
 				color = clrHex;
-				console.log("====", clr, clrHex, colors[clrStr]);
 				clr.click();
 				return;
 			}
@@ -68,7 +67,6 @@ chrome.tabs.query(tabParams, function (tabs) {
 
 addHighlightBtn.addEventListener("click", function (event) {
 	event.preventDefault();
-	console.log("Add highlight clicked with color", color);
 	chrome.tabs.query(tabParams, function (tabs) {
 		chrome.tabs.sendMessage(
 			tabs[0].id,
@@ -112,7 +110,6 @@ removeHighlightBtn.addEventListener("click", function (event) {
 clearBtn.addEventListener("click", function () {
 	changeBtnClr(clearBtn, "red");
 	chrome.storage.sync.get("highlightsExt", function (results) {
-		console.log("clearing");
 		let highlightsExt = results.highlightsExt;
 		if (highlightsExt[url]) {
 			delete highlightsExt[url];
@@ -143,11 +140,9 @@ colorPalette.forEach(function (clr) {
 						if (response.addBtn) {
 							addHighlightBtn.click();
 							addHighlightBtn.click();
-							console.log("clicked");
 						} else if (response.remBtn) {
 							removeHighlightBtn.click();
 							removeHighlightBtn.click();
-							console.log("clicked");
 						}
 					}
 				}
@@ -158,13 +153,12 @@ colorPalette.forEach(function (clr) {
 });
 
 notesBtn.addEventListener("click", function () {
-	chrome.browserAction.setPopup({ popup: "./notes-popup.html" });
+	chrome.browserAction.setPopup({ popup: "/popup/notes-popup.html" });
 });
 
-
 function changeBtnClr(button, clr) {
-	button.style.color = clr
+	button.style.color = clr;
 	setTimeout(function () {
-		button.style.color = "ivory"
+		button.style.color = "ivory";
 	}, 1200);
 }

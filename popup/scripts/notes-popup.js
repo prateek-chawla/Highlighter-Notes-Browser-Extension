@@ -1,31 +1,30 @@
 "use strict";
 const FONT_SIZES = ["13px", "14px", "16px", "18px"];
 
-const tabParams = { active: true, currentWindow: true };
-
-let url;
-chrome.tabs.query(tabParams, function (tabs) {
-	url = tabs[0].url;
-});
-const SAVE_NOTE = "SAVE_NOTE";
 const saveBtn = document.getElementById("save-btn");
 const delBtn = document.getElementById("delete-btn");
 const fontSizeBtn = document.getElementById("font-size-btn");
 const highlighterBtn = document.getElementById("highlighter-btn");
 const note = document.getElementById("note");
 
+const tabParams = { active: true, currentWindow: true };
+let url;
+chrome.tabs.query(tabParams, function (tabs) {
+	url = tabs[0].url;
+});
+
 window.addEventListener("load", renderNotes);
 saveBtn.addEventListener("click", saveNote);
 delBtn.addEventListener("click", delNote);
 fontSizeBtn.addEventListener("click", changeFontSize);
 
+highlighterBtn.addEventListener("click", function () {
+	chrome.browserAction.setPopup({ popup: "/popup/highlighter-popup.html" });
+});
+
 function renderNotes() {
-	console.log("load event fired");
-	console.log(note, note.value, url);
 	chrome.storage.sync.get("notesExt", function (results) {
 		let notes = results.notesExt;
-		console.log("inside note");
-		console.log(note, notes[url]);
 		if (notes[url]) note.value = notes[url];
 	});
 }
@@ -35,11 +34,7 @@ function saveNote() {
 	chrome.storage.sync.get("notesExt", function (results) {
 		let notes = results.notesExt;
 		notes[url] = note.value;
-		chrome.storage.sync.set({ notesExt: notes }, function changeBtnClr() {
-			setTimeout(function () {
-				saveBtn.style.color = "ivory";
-			}, 500);
-		});
+		chrome.storage.sync.set({ notesExt: notes });
 	});
 }
 
@@ -49,11 +44,7 @@ function delNote() {
 		let notes = results.notesExt;
 		notes[url] = note.value;
 		delete notes[url];
-		chrome.storage.sync.set({ notesExt: notes }, function changeBtnClr() {
-			setTimeout(function () {
-				delBtn.style.color = "ivory";
-			}, 500);
-		});
+		chrome.storage.sync.set({ notesExt: notes });
 		note.value = "";
 	});
 }
@@ -65,10 +56,6 @@ function changeFontSize() {
 	let newFontSize = FONT_SIZES[(idx + 1) % FONT_SIZES.length];
 	note.style.fontSize = newFontSize;
 }
-
-highlighterBtn.addEventListener("click", function () {
-	chrome.browserAction.setPopup({ popup: "./highlighter-popup.html" });
-});
 
 function changeBtnClr(button, clr, duration) {
 	button.style.color = clr;

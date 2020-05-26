@@ -6,14 +6,18 @@ function initialiseStorage() {
 		if (!results.highlightsExtInit) {
 			chrome.storage.sync.set({ highlightsExt: {} });
 			chrome.storage.sync.set({ notesExt: {} });
-			chrome.storage.sync.set({ highlighterExtInit: true });
-			chrome.storage.sync.set({ highlighterExtColor: "#fff475" });
+			chrome.storage.sync.set({ highlighterExtInit: true }); //Storage Initialised
+			chrome.storage.sync.set({ highlighterExtColor: "#fff475" }); // Default Color
 		}
 	});
 }
 
 function renderHighlights() {
-	chrome.tabs.executeScript({ file: "content-scripts/render-highlights.js" }, function () {
-		if (chrome.runtime.lastError) console.log(chrome.runtime.lastError.message);
-	});
+	chrome.tabs.executeScript(
+		{ file: "content-scripts/render-highlights.js" },
+		function () {
+			if (chrome.runtime.lastError)
+				console.log(chrome.runtime.lastError.message);
+		}
+	);
 }

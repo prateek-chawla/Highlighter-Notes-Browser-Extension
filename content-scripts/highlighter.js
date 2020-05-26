@@ -15,7 +15,7 @@ function highlighter(action, selObj) {
 	if (anchor === focus) {
 		preOffset = anchorOffset <= focusOffset ? anchorOffset : focusOffset;
 		postOffset = anchorOffset > focusOffset ? anchorOffset : focusOffset;
-		takeAction(action, node, true, preOffset, true, postOffset,color);
+		takeAction(action, node, true, preOffset, true, postOffset, color);
 	} else highlightRec(action, node);
 
 	function highlightRec(action, node) {
@@ -26,20 +26,20 @@ function highlighter(action, selObj) {
 			if (node === anchor) {
 				if (!anchorFlag) anchorFlag = true;
 				if (!focusFlag) {
-					takeAction(action, node, true, anchorOffset, false, len,color);
+					takeAction(action, node, true, anchorOffset, false, len, color);
 				} else {
-					takeAction(action, node, false, 0, true, anchorOffset,color);
+					takeAction(action, node, false, 0, true, anchorOffset, color);
 				}
 			} else if (node === focus) {
 				if (!focusFlag) focusFlag = true;
 				if (!anchorFlag) {
-					takeAction(action, node, true, focusOffset, false, len,color);
+					takeAction(action, node, true, focusOffset, false, len, color);
 				} else {
-					takeAction(action, node, false, 0, true, focusOffset,color);
+					takeAction(action, node, false, 0, true, focusOffset, color);
 				}
 			} else if (!anchorFlag && !focusFlag) return;
 			else if (anchorFlag || focusFlag) {
-				takeAction(action, node, false, 0, false, len,color);
+				takeAction(action, node, false, 0, false, len, color);
 			}
 			return;
 		}

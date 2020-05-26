@@ -48,20 +48,3 @@ function highlightHandler() {
 	highlighter(action, selObj);
 	sel.removeAllRanges();
 }
-function addHighlight() {
-	const sel = window.getSelection();
-	if (sel.isCollapsed) return;
-	selObj = extractFromSel(sel);
-	addToStorage(selObj, "yellow", window.location.href, ADD_HIGHLIGHT);
-	highlighter(ADD_HIGHLIGHT, selObj);
-	sel.removeAllRanges();
-}
-
-function removeHighlight() {
-	const sel = window.getSelection();
-	if (sel.isCollapsed) return;
-	selObj = extractFromSel(sel);
-	addToStorage(selObj, "yellow", window.location.href, REMOVE_HIGHLIGHT);
-	highlighter(REMOVE_HIGHLIGHT, selObj);
-	sel.removeAllRanges();
-}

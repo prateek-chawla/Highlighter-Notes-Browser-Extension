@@ -65,9 +65,6 @@ function removeDocFrag(node, preFlag, preOffset, postFlag, postOffset) {
 }
 
 function modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
-	console.log("node---> ", node);
-	console.log("parentNode --->", node.parentNode);
-	console.log("nodeValue --->", node.nodeValue);
 	const prevColor = node.parentNode.style.backgroundColor;
 	const frag = document.createDocumentFragment();
 	const text = node.nodeValue;
@@ -76,7 +73,6 @@ function modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
 		preSpan.style.backgroundColor = prevColor;
 		preSpan.className = "highlighter-ext";
 		preSpan.textContent = text.substring(0, preOffset);
-		console.log(preSpan);
 		frag.appendChild(preSpan);
 	}
 
@@ -85,7 +81,6 @@ function modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
 	span.className = "highlighter-ext";
 	span.textContent = text.substring(preOffset, postOffset);
 	frag.appendChild(span);
-	console.log(span);
 
 	if (postFlag && postOffset < text.length) {
 		const postSpan = document.createElement("span");
@@ -93,10 +88,7 @@ function modifyDocFrag(node, preFlag, preOffset, postFlag, postOffset, color) {
 		postSpan.className = "highlighter-ext";
 		postSpan.textContent = text.substring(postOffset);
 		frag.appendChild(postSpan);
-		console.log(postSpan);
 	}
-	console.log("frag log  --->", frag);
-	console.dir("frag dir -->", frag);
 	node.parentNode.replaceWith(frag);
 }
 
@@ -134,9 +126,7 @@ function addToStorage(selObj, url, action) {
 		obj.focusString = selObj.focus.textContent;
 		obj.action = action;
 		highlightsExt[url].push(obj);
-		chrome.storage.sync.set({ highlightsExt: highlightsExt }, () => {
-			console.log("Added To Storage");
-		});
+		chrome.storage.sync.set({ highlightsExt: highlightsExt });
 	});
 }
 
