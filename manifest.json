@@ -34,5 +34,22 @@
 			]
 		}
 	],
-	"permissions": ["storage", "tabs", "http://*/", "https://*/"]
+	"permissions": ["storage", "tabs", "http://*/", "https://*/"],
+
+	"commands": {
+          "add-highlight": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+H",
+              "mac": "Command+Shift+H"
+            },
+            "description": "Add Highlight"
+		  },
+		  "remove-highlight": {
+            "suggested_key": {
+              "default": "Ctrl+Shift+E",
+              "mac": "Command+Shift+E"
+            },
+            "description": "Remove Highlight"
+          }
+        }
 }

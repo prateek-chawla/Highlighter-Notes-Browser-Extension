@@ -153,6 +153,25 @@ colorPalette.forEach(function (clr) {
 });
 
 notesBtn.addEventListener("click", function () {
+	// Turn off highlighter buttons
+	chrome.tabs.query(tabParams, function (tabs) {
+		chrome.tabs.sendMessage(
+			tabs[0].id,
+			{ action: GET_BUTTON_STATUS },
+			function (response) {
+				if (chrome.runtime.lastError) {
+					console.log(chrome.runtime.lastError.message);
+				} else {
+					if (response.addBtn) {
+						addHighlightBtn.click();
+					} else if (response.remBtn) {
+						removeHighlightBtn.click();
+					}
+				}
+			}
+		);
+	});
+	// Switch Popup
 	chrome.browserAction.setPopup({ popup: "/popup/notes-popup.html" });
 });
 
