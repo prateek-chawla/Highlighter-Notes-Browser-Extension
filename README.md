@@ -2,7 +2,7 @@
 
 ### Download Here
 
-[Chrome Webstore](https://chrome.google.com/webstore/detail/kllkegeooedapeomenkneoilkodcleaa/publish-accepted?authuser=0&hl=en)
+[Chrome Webstore](https://chrome.google.com/webstore/detail/highlighter-%2B-notes/kllkegeooedapeomenkneoilkodcleaa/)
 
 
 [Firefox Add-Ons Gallery](https://addons.mozilla.org/addon/highlighter-notes/)
