@@ -1,6 +1,10 @@
 # Highlighter + Notes - Browser Extension
 
 ### Download Here
+
+[Chrome Webstore](https://chrome.google.com/webstore/detail/kllkegeooedapeomenkneoilkodcleaa/publish-accepted?authuser=0&hl=en)
+
+
 [Firefox Add-Ons Gallery](https://addons.mozilla.org/addon/highlighter-notes/)
 
 ### Highlight important text and take notes effortlessly.
