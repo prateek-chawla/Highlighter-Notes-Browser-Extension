@@ -14,13 +14,13 @@ This extension enables you to highlight text on any web page. Choose from five d
 Simply open up the Popup or use keyboard hotkeys to get started.
 
 #### Firefox Keyboard Hotkeys:
-**Alt+ Shift + J**  - Toggle Highlighter
+` Alt+ Shift + J `  - Toggle Highlighter
 
-**Alt+ Shift + K**  - Toggle Eraser
+` Alt+ Shift + K `  - Toggle Eraser
 
 #### Chrome Keyboard Hotkeys:
-**Ctrl+ Shift + H** - Toggle Highlighter
+` Ctrl+ Shift + H ` - Toggle Highlighter
 
-**Ctrl+ Shift + E** - Toggle Eraser
+` Ctrl+ Shift + E ` - Toggle Eraser
 
 _Highlighter may not work on some websites due to their structure_
